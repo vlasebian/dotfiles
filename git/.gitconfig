@@ -1,0 +1,9 @@
+[user]
+	name = Vlad Vitan
+	email = vladvitan@gmail.com
+
+[github]
+    user = vlasebian
+
+[core]
+	editor = vim
