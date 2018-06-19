@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 alias o=xdg-open
 alias n=nautilus
 alias vim=nvim
