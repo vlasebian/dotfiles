@@ -1,1 +1,1 @@
-source "$HOME/.dotfiles/system/.aliases"
+source "$HOME/.dotfiles/system/.bash_aliases"
