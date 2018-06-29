@@ -125,18 +125,18 @@ sudo -u "$USER" -i /bin/bash - <<-'EOF'
     echo "source $PACK/peda/peda.py" >> $HOME/.dotfiles/system/.gdbinit
 
     # Link directories configuration
-    ln -sf "$HOME/.dotfiles/system/users-dirs.dirs" "$HOME/.config";
+    ln -sf "$HOME/.dotfiles/system/user-dirs.dirs" "$HOME/.config";
 
     # Link .gitconfig
-    ln -sf "$HOME/.dotfiles/git/.gitconfig" "$HOME";
+    ln -sf "$HOME/.dotfiles/git/gitconfig" "$HOME/.gitconfig";
 
-    # Link .gdbinit
-    ln -sf "$HOME/.dotfiles/system/.gdbinit" "$HOME";
+    # Link .gdbinit, .bash_profile, .bashrc, .bash_aliases
+    for f in system/*
+    do
+        ln -sf "$f" "$HOME/.${f##*/}"
+    done
 
-    # Link .bash_profile
-    ln -sf "$HOME/.dotfiles/system/.bash_profile" "$HOME";
-
-    # Link .bash_rc
-    ln -sf "$HOME/.dotfiles/system/.bashrc" "$HOME";
+    # Link template files
+    ln -sf "$HOME/.dotfiles/templates" "$HOME/.templates";
 
 EOF

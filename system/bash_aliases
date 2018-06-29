@@ -3,3 +3,4 @@ alias n=nautilus
 alias vim=nvim
 alias p=python
 alias chx='chmod +x'
+alias ida='$HOME/packages/idademo70/ida'
