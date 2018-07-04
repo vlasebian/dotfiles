@@ -6,6 +6,9 @@
 ##
 ##  vlasebian
 
+ctf_tools = false
+nvim_instead_of_vim = false
+
 if [[ $UID != 0 ]]; then
     echo "Please run this script with sudo:"
     echo "sudo $0 $*"
@@ -54,7 +57,7 @@ CTF=(
     nasm
     bless
     radare2
-    #wireshark
+    wireshark
 )
 
 # Install packages and set configurations
@@ -72,10 +75,13 @@ CTF=(
     echo "======   Installing languages... ======"
     apt-get -y install ${LANGS[@]}
 
-    echo "======   Installing ctf tools... ======"
-    apt-get -y install ${CTF[@]}
-    pip install --upgrade pip
-    pip install --upgrade pwntools
+    if ctf_tools
+    then
+        echo "======   Installing ctf tools... ======"
+        apt-get -y install ${CTF[@]}
+        pip install --upgrade pip
+        pip install --upgrade pwntools
+    fi
 
 } 2> errors.txt
 
@@ -113,16 +119,24 @@ sudo -u "$USER" -i /bin/bash - <<-'EOF'
     # Create directory for init.vim
     mkdir $HOME/.config/nvim;
 
-    # Link init.vim
-    ln -sf "$HOME/.dotfiles/vim/init.vim" "$HOME/.config/nvim";
-    
-    # Install vundle and plugins
-    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.config/nvim/bundle/Vundle.vim &&
-    nvim +PluginInstall +qall;
+    # Link .vimrc
+    if nvim_instead_of_vim
+    then
+        ln -sf "$HOME/.dotfiles/vim/init.vim" "$HOME/.config/nvim";
+        git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.config/nvim/bundle/Vundle.vim && 
+        nvim +PluginInstall +qall;
+    else
+        ln -sf "$HOME/.dotfiles/vim/vimrc" "$HOME/.vimrc";
+        git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.config/vim/bundle/Vundle.vim &&
+        vim +PluginInstall +qall;
+    fi
 
     # Install gdb peda
-    git clone https://github.com/longld/peda.git $PACK/peda
-    echo "source $PACK/peda/peda.py" >> $HOME/.dotfiles/system/.gdbinit
+    if ctf-tools
+    then
+        git clone https://github.com/longld/peda.git $PACK/peda
+        echo "source $PACK/peda/peda.py" >> $HOME/.dotfiles/system/.gdbinit
+    fi
 
     # Link directories configuration
     ln -sf "$HOME/.dotfiles/system/user-dirs.dirs" "$HOME/.config";
@@ -130,11 +144,16 @@ sudo -u "$USER" -i /bin/bash - <<-'EOF'
     # Link .gitconfig
     ln -sf "$HOME/.dotfiles/git/gitconfig" "$HOME/.gitconfig";
 
-    # Link .gdbinit, .bash_profile, .bashrc, .bash_aliases
-    for f in system/*
-    do
-        ln -sf "$f" "$HOME/.${f##*/}"
-    done
+    # Link .gdbinit
+    if ctf-tools
+    then
+        ln -sf "$HOME/.dotfiles/system/gdbinit" "$HOME/.gdbinit";
+    fi
+
+    # Link .bash_profile, .bashrc, .bash_aliases
+    ln -sf "$HOME/.dotfiles/system/bash_profile" "$HOME/.bash_profile";
+    ln -sf "$HOME/.dotfiles/system/bash_aliases" "$HOME/.bash_aliases";
+    ln -sf "$HOME/.dotfiles/system/bashrc" "$HOME/.bashrc";
 
     # Link template files
     ln -sf "$HOME/.dotfiles/templates" "$HOME/.templates";
