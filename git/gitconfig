@@ -7,3 +7,6 @@
 
 [core]
 	editor = vim
+
+[merge]
+    tool = vimdiff
