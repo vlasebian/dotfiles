@@ -85,3 +85,6 @@ set cursorline
 
 " Color column at 80
 set cc=80
+
+" Maintain undo history between sessions
+set undofile

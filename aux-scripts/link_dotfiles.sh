@@ -43,8 +43,8 @@ then
     git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.config/nvim/bundle/Vundle.vim && 
     nvim +PluginInstall +qall;
 else
-    ln -sf "$HOME/.dotfiles/vim/vimrc" "$HOME/.vimrc";
-    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.config/vim/bundle/Vundle.vim &&
+    ln -sf "$HOME/.dotfiles/vim/init.vim" "$HOME/.vimrc";
+    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim &&
         vim +PluginInstall +qall;
 fi
 
