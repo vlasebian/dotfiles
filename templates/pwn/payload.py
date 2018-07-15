@@ -2,9 +2,11 @@
 
 from pwn import *
 
-payload = ''
+offset = 0
+address = p64(0xcafebabe)
 
-# create payload here, you can use p32 and p64
+# 'x' is 0x78
+payload = 'x' * offset + address
 
 with open("payload", "wb") as output_file:
     output_file.write(payload)

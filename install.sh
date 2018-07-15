@@ -59,7 +59,7 @@ EOF
 # boostnote)
 
 # Stuff for bluetooth speakers
-apt-get install bluez bluez-tools pulseaudio-module-bluetooth
+apt-get install bluez bluez-tools bluez-firmware pulseaudio-module-bluetooth
 
 # Alt - Tab only on current workspace
 gsettings set org.gnome.shell.window-switcher current-workspace-only true
@@ -91,6 +91,8 @@ EDITOR=(
 
 LANGS=(
     gcc
+    g++
+    libcurl4-openssl-dev
     clang
     gdb
     openjdk-8*
@@ -98,6 +100,7 @@ LANGS=(
     python3.5
     python-dev
     python-pip
+    gdc
 )
 
 CTF=(

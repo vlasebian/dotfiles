@@ -9,3 +9,4 @@ My configurations and dotfiles.
 - boostnote
 - slack
 - shell shortcuts
+- curl
