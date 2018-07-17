@@ -10,3 +10,4 @@ My configurations and dotfiles.
 - slack
 - shell shortcuts
 - curl
+- fast scp to fep
