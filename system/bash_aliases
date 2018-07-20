@@ -4,8 +4,6 @@ alias p=python
 alias chx='chmod +x'
 
 alias reset-sound='sudo killall -9 pulseaudio; pulseaudio >/dev/null 2>&1 &'
-alias ida='$HOME/packages/idademo70/ida'
-alias vim=nvim
 
 alias dmd='~/dev-area/dlang/dmd/generated/linux/release/64/dmd'
 alias fep='ssh vlad.vitan@fep.grid.pub.ro -X'

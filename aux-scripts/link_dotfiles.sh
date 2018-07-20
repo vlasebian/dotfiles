@@ -8,8 +8,8 @@
 ##
 ## Run this script as current user, not as root!
 
-ctf_tools = $1
-nvim_instead_of_vim = $2
+ctf_tools=$1
+nvim_instead_of_vim=$2
 
 PACK=$HOME/packages
 
@@ -37,20 +37,18 @@ fi;
 mkdir $HOME/.config/nvim;
 
 # Link .vimrc
-if nvim_instead_of_vim
-then
+if [[ "$nvim_instead_of_vim" -eq 1 ]]; then
     ln -sf "$HOME/.dotfiles/vim/init.vim" "$HOME/.config/nvim";
-    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.config/nvim/bundle/Vundle.vim && 
+    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.config/nvim/bundle/Vundle.vim;
     nvim +PluginInstall +qall;
 else
-    ln -sf "$HOME/.dotfiles/vim/init.vim" "$HOME/.vimrc";
-    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim &&
-        vim +PluginInstall +qall;
+    ln -sf "$HOME/.dotfiles/vim/vimrc" "$HOME/.vimrc";
+    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim;
+    vim +PluginInstall +qall;
 fi
 
 # Install gdb peda
-if ctf-tools
-then
+if [[ "$ctf-tools" -eq 1 ]]; then
     git clone https://github.com/longld/peda.git $PACK/peda
     echo "source $PACK/peda/peda.py" >> $HOME/.dotfiles/system/.gdbinit
 fi
@@ -62,8 +60,7 @@ ln -sf "$HOME/.dotfiles/system/user-dirs.dirs" "$HOME/.config";
 ln -sf "$HOME/.dotfiles/git/gitconfig" "$HOME/.gitconfig";
 
 # Link .gdbinit
-if ctf-tools
-then
+if [[ "$ctf-tools" -eq 1 ]]; then
     ln -sf "$HOME/.dotfiles/system/gdbinit" "$HOME/.gdbinit";
 fi
 

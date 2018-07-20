@@ -7,8 +7,8 @@
 ##  vlasebian
 
 # Install options
-ctf_tools = false
-nvim_instead_of_vim = false
+ctf_tools=1
+nvim_instead_of_vim=1
 
 # Check if script is run with sudo
 if [[ $UID != 0 ]]; then
@@ -51,7 +51,7 @@ USER=vlasebian
 
 # Link dotfiles and modify current user directories
 sudo -u "$USER" -i /bin/bash - <<-'EOF'
-    bash aux-scripts/link_dotfiles.sh ctf_tools nvim_instead_of_vim
+    bash $HOME/.dotfiles/aux-scripts/link_dotfiles.sh $ctf_tools $nvim_instead_of_vim
 EOF
 
 # ONLY FOR DEBIAN! - set contrib, non-free
@@ -59,7 +59,7 @@ EOF
 # boostnote)
 
 # Stuff for bluetooth speakers
-apt-get install bluez bluez-tools bluez-firmware pulseaudio-module-bluetooth
+# apt-get install bluez bluez-tools bluez-firmware pulseaudio-module-bluetooth
 
 # Alt - Tab only on current workspace
 gsettings set org.gnome.shell.window-switcher current-workspace-only true
