@@ -6,6 +6,9 @@
 ##
 ##  vlasebian
 
+# User name
+USER=vlasebian
+
 # Install options
 ctf_tools=1
 nvim_instead_of_vim=1
@@ -17,8 +20,7 @@ if [[ $UID != 0 ]]; then
     exit 1
 fi
 
-# Install packages and set configurations
-{
+function install_packages {
 
     apt-get -y update
     apt-get -y upgrade
@@ -32,38 +34,18 @@ fi
     echo "======   Installing languages... ======"
     apt-get -y install ${LANGS[@]}
 
-    if ctf_tools
-    then
+    if [[ "$ctf_tools" -eq 1 ]]; then
         echo "======   Installing ctf tools... ======"
         apt-get -y install ${CTF[@]}
         pip install --upgrade pip
         pip install --upgrade pwntools
     fi
 
-} 2> errors.txt
+    apt-get update --fix-missing;
+    apt-get autoremove;
+    apt-get clean;
 
-apt-get update --fix-missing;
-apt-get autoremove;
-apt-get clean;
-
-# Change user
-USER=vlasebian
-
-# Link dotfiles and modify current user directories
-sudo -u "$USER" -i /bin/bash - <<-'EOF'
-    bash $HOME/.dotfiles/aux-scripts/link_dotfiles.sh $ctf_tools $nvim_instead_of_vim
-EOF
-
-# ONLY FOR DEBIAN! - set contrib, non-free
-# TODO - overwrite the original file, also put others repo in (slack and 
-# boostnote)
-
-# Stuff for bluetooth speakers
-# apt-get install bluez bluez-tools bluez-firmware pulseaudio-module-bluetooth
-
-# Alt - Tab only on current workspace
-gsettings set org.gnome.shell.window-switcher current-workspace-only true
-gsettings set org.gnome.shell.app-switcher current-workspace-only true
+}
 
 # Stuff that will be installed
 TOOLS=(
@@ -82,6 +64,8 @@ TOOLS=(
     bash-completion
     firmware-atheros
     lshw
+    gconf2
+    curl
 )
 
 EDITOR=(
@@ -115,5 +99,32 @@ CTF=(
     nasm
     bless
     radare2
-    wireshark
+    # wireshark
 )
+
+apt-add-repository non-free
+apt-add-repository contrib
+
+# Install packages
+install_packages;
+
+# Alt - Tab only on current workspace
+gsettings set org.gnome.shell.window-switcher current-workspace-only true
+gsettings set org.gnome.shell.app-switcher current-workspace-only true
+
+sudo -u "$USER" -i /bin/bash - <<-'EOF'
+{
+    # Link files and configure vim
+    bash $HOME/.dotfiles/aux-scripts/link_dotfiles.sh $ctf_tools $nvim_instead_of_vim;
+
+    # Install gnome-terminal themes
+    bash $HOME/.dotfiles/themes/one-dark.sh
+    bash $HOME/.dotfiles/themes/one-light.sh
+
+    # Stuff for bluetooth speakers
+    # apt-get install bluez bluez-tools bluez-firmware pulseaudio-module-bluetooth
+
+    echo "     #### Installation complete ! #### "
+
+} 2> errors.txt
+EOF
