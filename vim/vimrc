@@ -88,3 +88,6 @@ set cc=80
 
 " Maintain undo history between sessions
 set undofile
+
+" Use nasm syntax for .asm files
+autocmd BufNewFile,BufRead *.asm set filetype=nasm
