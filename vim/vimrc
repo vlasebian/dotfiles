@@ -86,8 +86,9 @@ set cursorline
 " Color column at 80
 set cc=80
 
-" Maintain undo history between sessions
+" Maintain undo history between sessions in a certain directory
 set undofile
+set undodir=~/.vim/undo_history
 
 " Use nasm syntax for .asm files
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
