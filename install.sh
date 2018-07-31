@@ -66,6 +66,7 @@ TOOLS=(
     lshw
     gconf2
     curl
+    indicator-keylock
 )
 
 EDITOR=(
@@ -102,8 +103,10 @@ CTF=(
     # wireshark
 )
 
-apt-add-repository non-free
-apt-add-repository contrib
+apt-add-repository -y non-free
+apt-add-repository -y contrib
+add-apt-repository -y ppa:tsbarnes/indicator-keylock
+
 
 # Install packages
 install_packages;
