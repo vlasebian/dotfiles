@@ -61,8 +61,8 @@ TOOLS=(
     vlc
     mediainfo
     ffmpeg
-    bash-completion
-    firmware-atheros
+    #bash-completion
+    #firmware-atheros
     lshw
     gconf2
     curl
@@ -80,7 +80,7 @@ LANGS=(
     libcurl4-openssl-dev
     clang
     gdb
-    openjdk-8*
+    openjdk-9*
     python
     python3.5
     python-dev
@@ -103,8 +103,8 @@ CTF=(
     # wireshark
 )
 
-apt-add-repository -y non-free
-apt-add-repository -y contrib
+#apt-add-repository -y non-free
+#apt-add-repository -y contrib
 add-apt-repository -y ppa:tsbarnes/indicator-keylock
 
 
