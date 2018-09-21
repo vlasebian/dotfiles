@@ -71,6 +71,7 @@ TOOLS=(
 
 EDITOR=(
     vim
+    atom
     neovim
 )
 
@@ -106,6 +107,9 @@ CTF=(
 #apt-add-repository -y non-free
 #apt-add-repository -y contrib
 add-apt-repository -y ppa:tsbarnes/indicator-keylock
+curl -sL https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
+sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/any main" >
+/etc/apt/sources.list.d/atom.list'
 
 
 # Install packages
