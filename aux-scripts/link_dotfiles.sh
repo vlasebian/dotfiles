@@ -9,7 +9,6 @@
 ## Run this script as current user, not as root!
 
 ctf_tools=$1
-nvim_instead_of_vim=$2
 
 PACK=$HOME/packages
 
@@ -20,7 +19,7 @@ mv $HOME/Pictures  $HOME/pictures;
 mv $HOME/Public    $HOME/share;
 
 mkdir $HOME/security;
-mkdir $HOME/dev-area;
+mkdir $HOME/work;
 mkdir $HOME/university;
 
 rm -rf $HOME/Desktop;
@@ -37,15 +36,9 @@ fi;
 mkdir $HOME/.config/nvim;
 
 # Link .vimrc
-if [[ "$nvim_instead_of_vim" -eq 1 ]]; then
-    ln -sf "$HOME/.dotfiles/vim/init.vim" "$HOME/.config/nvim";
-    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.config/nvim/bundle/Vundle.vim;
-    nvim +PluginInstall +qall;
-else
-    ln -sf "$HOME/.dotfiles/vim/vimrc" "$HOME/.vimrc";
-    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim;
-    vim +PluginInstall +qall;
-fi
+ln -sf "$HOME/.dotfiles/vim/vimrc" "$HOME/.vimrc";
+git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim;
+vim +PluginInstall +qall;
 
 # Install gdb peda
 if [[ "$ctf-tools" -eq 1 ]]; then
