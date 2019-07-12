@@ -4,8 +4,6 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -37,9 +35,13 @@ filetype plugin indent on    " required
 " Sets the moving numbers on the right
 set relativenumber
 
-" Set Ctrl - n as shortcut for opening NERDTree
-map <C-b> :NERDTreeToggle<CR>
+" Enable mouse!
+set mouse=a
 
+" Set Ctrl - b as shortcut for opening NERDTree
+map <C-b> :NERDTreeToggle<CR>
+" let nerdtree use the mouse
+let g:NERDTreeMouseMode=3
 
 "" Indentation Stuff
 set expandtab
@@ -48,7 +50,6 @@ set softtabstop=4
 set shiftwidth=4
 set autoindent
 set textwidth=100
-
 
 "" Exit with :WQ :Wq :wQ etc.
  cnoreabbrev W! w!
@@ -92,3 +93,8 @@ set undodir=~/.vim/undo_history
 
 " Use nasm syntax for .asm files
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
+
+syntax on
+
+" syntax check for avrgcc
+let g:syntastic_c_checkers = ['avr-g++']

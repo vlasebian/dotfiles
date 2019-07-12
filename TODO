@@ -1,7 +1,9 @@
 # to-do
 
 - bluetooth speakers
-- boostnote
+- boostnote - download latest release without manually updating link
 - slack
 - shell shortcuts
 - fast scp to fep
+- make a script to back up repos and other stuff
+- create cron entry to push repos every week

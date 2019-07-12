@@ -18,9 +18,10 @@ mv $HOME/Documents $HOME/documents;
 mv $HOME/Pictures  $HOME/pictures;
 mv $HOME/Public    $HOME/share;
 
-mkdir $HOME/security;
+mkdir $HOME/sec;
 mkdir $HOME/work;
-mkdir $HOME/university;
+mkdir $HOME/work/random;
+mkdir $HOME/uni;
 
 rm -rf $HOME/Desktop;
 rm -rf $HOME/Templates;
@@ -31,9 +32,6 @@ rm -rf $HOME/Videos;
 if [ ! -d "$PACK" ]; then
     mkdir $PACK
 fi;
-
-# Create directory for init.vim
-mkdir $HOME/.config/nvim;
 
 # Link .vimrc
 ln -sf "$HOME/.dotfiles/vim/vimrc" "$HOME/.vimrc";
@@ -61,6 +59,9 @@ fi
 ln -sf "$HOME/.dotfiles/system/bash_profile" "$HOME/.bash_profile";
 ln -sf "$HOME/.dotfiles/system/bash_aliases" "$HOME/.bash_aliases";
 ln -sf "$HOME/.dotfiles/system/bashrc" "$HOME/.bashrc";
+
+# Link terminator config
+ln -sf "$HOME/.dotfiles/system/terminator-config" "$HOME/.config/terminator/config";
 
 # Link template files
 ln -sf "$HOME/.dotfiles/templates" "$HOME/.templates";

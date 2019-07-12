@@ -130,3 +130,5 @@ elif [ -f /usr/bin/vim ]; then
     export EDITOR="$VISUAL"
 fi
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
