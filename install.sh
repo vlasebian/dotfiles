@@ -39,6 +39,7 @@ TOOLS=(
     dirmngr
     irssi
     typora
+    slack-desktop
 )
 
 
