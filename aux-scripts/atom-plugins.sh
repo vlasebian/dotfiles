@@ -9,9 +9,6 @@ TOOLS=(
     # nice file icons
     file-icons
 
-    # stackoverflow in atom
-    ask-stack
-
     # show colors on hex code
     pigments
 
