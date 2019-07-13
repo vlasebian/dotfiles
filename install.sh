@@ -190,6 +190,10 @@ make_user_specific_conf() {
 		mkdir -p $HOME/.repos/homework
 		git clone git@github.com:vlasebian/homework.git $HOME/.repos/homework
 
+        # clone sec
+		mkdir -p $HOME/.repos/ctf
+        git clone git@github.com:vlasebian/ctf.git $HOME/.repos/ctf
+
 	} 2> user-wide_errors.txt
 	EOF
 
