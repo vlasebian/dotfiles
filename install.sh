@@ -11,7 +11,7 @@
 USER=vlasebian
 
 # install options
-ctf_tools=1
+INSTALL_CTF_TOOLS=1
 
 
 # Stuff that will be installed
@@ -34,11 +34,11 @@ TOOLS=(
     gconf2
 	libcurl4
     curl
-    indicator-keylock
 	terminator
 	unrar
     dirmngr
     irssi
+    typora
 )
 
 
@@ -51,10 +51,10 @@ LANGS=(
     openjdk-9*
     openjdk-8*
     oracle-java11-set-default
-    python
-    python3.5
-    python-dev
-    python-pip
+    python3
+    python3-dev
+    python3-pip
+    nasm
     # gdc
 )
 
@@ -68,11 +68,11 @@ CTF=(
     libssl-dev
     libffi-dev
     build-essential
-    nasm
-    bless
+    # bless
     # radare2
     wireshark
 )
+
 
 DEP=(
     gconf-service
@@ -82,8 +82,8 @@ DEP=(
     gconf-defaults-service
     gir1.2-keybinder-3.0
     libkeybinder-3.0-0
-    python-gi-cairo
-    python-psutil
+    python3-gi-cairo
+    python3-psutil
     irssi-scripts
     ca-certificates
     libcrypt-blowfish-perl
@@ -93,17 +93,17 @@ DEP=(
 )
 
 
+# do not add ppa repositories, they are not for debian
 add_repositories() {
     apt-get -y update;
     apt-get -y upgrade;
 
 	apt-add-repository -y non-free;
 	apt-add-repository -y contrib;
-    # ppas do not work well with debian
-	# add-apt-repository -y ppa:tsbarnes/indicator-keylock
-    # add-apt-repository -y ppa:openjdk-r/ppa
-    echo "deb http://ppa.launchpad.net/linuxuprising/java/ubuntu bionic main" | tee /etc/apt/sources.list.d/linuxuprising-java.list;
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 73C3DB2A;
+
+    # add typora repository
+    wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -
+    add-apt-repository 'deb https://typora.io/linux ./'
 }
 
 
@@ -112,7 +112,8 @@ install_packages() {
     apt-get -y upgrade
 
     echo "======   Installing vim...    ======"
-    apt-get -y install vim-gnome
+    apt-get -y install vim-gnome vim-common vim-addon-manager vim-youcompleteme
+    vim-addon-manager install youcompleteme
 
     echo "======   Installing tools...     ======"
     apt-get -y install ${TOOLS[@]}
@@ -123,22 +124,20 @@ install_packages() {
     echo "======   Installing languages... ======"
     apt-get -y install ${LANGS[@]}
 
-    if [[ "$ctf_tools" -eq 1 ]]; then
+    if [[ "$INSTALL_CTF_TOOLS" -eq 1 ]]; then
         echo "======   Installing ctf tools... ======"
         apt-get -y install ${CTF[@]}
-        pip install --upgrade pip
-        pip install --upgrade pwntools
+        pip3 install --upgrade pwntools
     fi
 
     echo "======   Installing atom...   ======"
 	wget https://atom.io/download/deb -O atom.deb
 	dpkg -i atom.deb
 	rm -rf atom.deb
-	
-	echo "======   Installing boostnote...   ======"
-	wget https://github.com/BoostIO/boost-releases/releases/download/v0.11.15/boostnote_0.11.15_amd64.deb -O boostnote.deb
-	dpkg -i boostnote.deb
-	rm -rf boostnote.deb
+
+    echo "======   Installing fxf...    ======"
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    source ~/.fzf/install
 	
 	apt-get update --fix-missing;
 	apt-get autoremove;
@@ -164,28 +163,31 @@ make_user_specific_conf() {
 	{
 
 		# Link files and configure vim
-		bash $HOME/.dotfiles/aux-scripts/link_dotfiles.sh $ctf_tools;
+		bash $HOME/.dotfiles/aux-scripts/link_dotfiles.sh $INSTALL_CTF_TOOLS;
 
         # change ssh key permissions
         chmod 700 $HOME/.ssh
         chmod 644 $HOME/.ssh/id_rsa.pub
         chmod 600 $HOME/.ssh/id_rsa
 
+        # make a directory for repos
+        mkdir $HOME/.repos
+
 		# clone notes
-		mkdir -p $HOME/documents/notes
-		git clone git@github.com:vlasebian/notes.git $HOME/documents/notes
+		mkdir -p $HOME/.repos/notes
+		git clone git@github.com:vlasebian/notes.git $HOME/.repos/notes
 		
 		# clone snippets
-		mkdir -p $HOME/.snipptes
-		git clone git@github.com:vlasebian/snippets.git $HOME/.snippets
+		mkdir -p $HOME/.repos/snippets
+		git clone git@github.com:vlasebian/snippets.git $HOME/.repos/snippets
 
 		# clone random-algorithms
-		mkdir -p $HOME/.algorithms
-		git clone git@github.com:vlasebian/random-algorithms.git $HOME/.algorithms
+		mkdir -p $HOME/.repos/algorithms
+		git clone git@github.com:vlasebian/random-algorithms.git $HOME/.repos/algorithms
 
 		# clone hw
-		mkdir -p $HOME/documents/
-		git clone git@github.com:vlasebian/homework.git $HOME/documents/homework
+		mkdir -p $HOME/.repos/homework
+		git clone git@github.com:vlasebian/homework.git $HOME/.repos/homework
 
 	} 2> user-wide_errors.txt
 	EOF

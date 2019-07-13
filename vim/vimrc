@@ -8,14 +8,17 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Lines added by VLASEBIAN start here
-Plugin 'ervandew/supertab'
+" Lines added by the user start here
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'landaire/deoplete-d'
 Plugin 'ajmwagar/vim-deus'
-" Lines added by VLASEBIAN end here
+Plugin 'tpope/vim-surround'
+" Use gcc to comment out a line, gc to comment the visual selection, gcap to comment a paragraph
+Plugin 'tpope/vim-commentary'
+" Toogle indent guides on and off with <leader>ig (leader is /)
+Plugin 'nathanaelkane/vim-indent-guides'
+" Lines added by the user end here
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -93,8 +96,5 @@ set undodir=~/.vim/undo_history
 
 " Use nasm syntax for .asm files
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
-
 syntax on
 
-" syntax check for avrgcc
-let g:syntastic_c_checkers = ['avr-g++']
