@@ -136,10 +136,6 @@ install_packages() {
 	dpkg -i atom.deb
 	rm -rf atom.deb
 
-    echo "======   Installing fxf...    ======"
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    source ~/.fzf/install
-	
 	apt-get update --fix-missing;
 	apt-get autoremove;
 	apt-get clean;
@@ -162,6 +158,12 @@ make_user_specific_conf() {
 
 	sudo -u "$USER" -i /bin/bash - <<-'EOF'
 	{
+        # Install fzf
+        git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+        source $HOME/.fzf/install
+	
+        # Install Vundle
+        git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim;
 
 		# Link files and configure vim
 		bash $HOME/.dotfiles/aux-scripts/link_dotfiles.sh $INSTALL_CTF_TOOLS;
@@ -210,7 +212,7 @@ main() {
 	fi
 
 	echo "# Hope you have your keys copied in the system! Here we go ..."
-	sleep 2
+	sleep 5
 
 	add_repositories;
 	install_packages;

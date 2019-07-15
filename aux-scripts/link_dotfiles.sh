@@ -35,7 +35,6 @@ fi;
 
 # Link .vimrc
 ln -sf "$HOME/.dotfiles/vim/vimrc" "$HOME/.vimrc";
-git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim;
 
 # Install gdb peda
 if [[ "$ctf-tools" -eq 1 ]]; then
