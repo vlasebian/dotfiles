@@ -64,3 +64,11 @@ ln -sf "$HOME/.dotfiles/system/terminator-config" "$HOME/.config/terminator/conf
 
 # Link template files
 ln -sf "$HOME/.dotfiles/templates" "$HOME/.templates";
+
+# Link ssh file
+
+if [ ! -d "$HOME/.ssh" ]; then
+    mkdir $HOME/.ssh
+fi;
+
+ln -sf "$HOME/.dotfiles/system/ssh_config" "$HOME/.ssh/config";

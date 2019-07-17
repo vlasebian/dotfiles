@@ -1,0 +1,16 @@
+# ~/.ssh/config
+#
+# @vlasebian
+
+## ssh shortcut example
+#
+# Use `ssh <alias>` to connect to the specified host using the alias configured
+# below
+#
+# Host <alias>
+#   HostName <host-name>
+#   User <user>
+#   Port <port>
+#
+
+
