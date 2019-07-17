@@ -59,6 +59,7 @@ ln -sf "$HOME/.dotfiles/system/bash_aliases" "$HOME/.bash_aliases";
 ln -sf "$HOME/.dotfiles/system/bashrc" "$HOME/.bashrc";
 
 # Link terminator config
+mkdir -p $HOME/.config/terminator/ 
 ln -sf "$HOME/.dotfiles/system/terminator-config" "$HOME/.config/terminator/config";
 
 # Link template files
