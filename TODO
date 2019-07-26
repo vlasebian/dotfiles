@@ -9,4 +9,5 @@ Add this to the dotfiles installation process:
 - fast scp to fep
 - make a script to back up repos and other stuff
 - create cron entry to push repos every week
+- add jq to tools
 
