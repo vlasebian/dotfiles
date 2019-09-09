@@ -1,6 +1,6 @@
 alias o=xdg-open
 alias n=nautilus
-alias py=python
+alias py=python3
 alias chx='chmod +x'
 
 alias reset-sound='sudo killall -9 pulseaudio; pulseaudio >/dev/null 2>&1 &'

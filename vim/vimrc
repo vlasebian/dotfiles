@@ -8,17 +8,34 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Lines added by the user start here
+""""" Lines added by the user start here
+
+" Use Ctrl - B to open a file browser
 Plugin 'scrooloose/nerdtree'
+
+" Nice visual for the status bar
 Plugin 'vim-airline/vim-airline'
+
+" Syntax checker for vim, it can really slow it down sometimes
 Plugin 'vim-syntastic/syntastic'
+
+" A nice dark theme
 Plugin 'ajmwagar/vim-deus'
+
+" This helps with the parentheses and brackets
 Plugin 'tpope/vim-surround'
+
 " Use gcc to comment out a line, gc to comment the visual selection, gcap to comment a paragraph
 Plugin 'tpope/vim-commentary'
+
 " Toogle indent guides on and off with <leader>ig (leader is /)
 Plugin 'nathanaelkane/vim-indent-guides'
-" Lines added by the user end here
+
+" Autocompletion for html structures
+Plugin 'mattn/emmet-vim'
+
+
+"""""" Lines added by the user end here
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -98,3 +115,22 @@ set undodir=~/.vim/undo_history
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
 syntax on
 
+" Function for toggling vim colorscheme
+nnoremap ,<space> :call ColorSchemeToggle()<cr>
+
+let g:colorscheme_is_white=0
+
+function! ColorSchemeToggle()
+    " if colorscheme is white, make it dark
+    if g:colorscheme_is_white
+        colorscheme deus
+        let g:colorscheme_is_white=0
+    else
+        colorscheme morning
+        let g:colorscheme_is_white=1
+    endif
+endfunction
+
+" Fire emmet plugin up just for html/css
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
