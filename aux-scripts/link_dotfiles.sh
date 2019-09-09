@@ -35,7 +35,6 @@ fi;
 
 # Link .vimrc
 ln -sf "$HOME/.dotfiles/vim/vimrc" "$HOME/.vimrc";
-git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim;
 
 # Install gdb peda
 if [[ "$ctf-tools" -eq 1 ]]; then
@@ -60,7 +59,16 @@ ln -sf "$HOME/.dotfiles/system/bash_aliases" "$HOME/.bash_aliases";
 ln -sf "$HOME/.dotfiles/system/bashrc" "$HOME/.bashrc";
 
 # Link terminator config
+mkdir -p $HOME/.config/terminator/ 
 ln -sf "$HOME/.dotfiles/system/terminator-config" "$HOME/.config/terminator/config";
 
 # Link template files
 ln -sf "$HOME/.dotfiles/templates" "$HOME/.templates";
+
+# Link ssh file
+
+if [ ! -d "$HOME/.ssh" ]; then
+    mkdir $HOME/.ssh
+fi;
+
+ln -sf "$HOME/.dotfiles/system/ssh_config" "$HOME/.ssh/config";

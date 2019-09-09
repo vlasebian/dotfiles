@@ -1,9 +1,9 @@
 [user]
 	name = Vlad Vitan
-	email = vladvitan@gmail.com
+	email = vlad.vitan@keysight.com
 
 [github]
-    user = vlasebian
+    user = vlavitan
 
 [core]
 	editor = vim
