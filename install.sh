@@ -12,6 +12,7 @@ source src/config.sh;
 
 # do not add ppa repositories, they are not for debian
 add_repositories() {
+
     apt-get -y update;
     apt-get -y upgrade;
 
@@ -28,12 +29,15 @@ add_repositories() {
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
     install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
     sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+    rm packages-microsoft-gpg
 
     apt-get -y update;
+
 }
 
 
 install_packages() {
+
 	apt-get -y update;
 	apt-get -y upgrade;
 
@@ -43,14 +47,10 @@ install_packages() {
 	    apt-get -y build-dep $app && apt-get -y install $app;
     done
 
-   	# # install Atom
-	# wget https://atom.io/download/deb -O atom.deb
-	# dpkg -i atom.deb
-	# rm -rf atom.deb
-
 	apt-get update --fix-missing;
 	apt-get autoremove;
 	apt-get clean;
+
 }
 
 
@@ -67,7 +67,6 @@ add_configurations() {
 
 
 make_user_specific_conf() {
-    echo "#### Making user configurations... ####";
 
 	sudo -u "$USER" -i /bin/bash - <<-'EOF'
 	{
@@ -91,23 +90,23 @@ make_user_specific_conf() {
 
 		# clone notes
 		mkdir -p $HOME/.repos/notes;
-		git clone -y git@github.com:vlasebian/notes.git $HOME/.repos/notes;
+		git clone  git@github.com:vlasebian/notes.git $HOME/.repos/notes;
 			
 		# clone snippets
 		mkdir -p $HOME/.repos/snippets;
-		git clone -y git@github.com:vlasebian/snippets.git $HOME/.repos/snippets;
+		git clone  git@github.com:vlasebian/snippets.git $HOME/.repos/snippets;
 
 		# clone random-algorithms
 		mkdir -p $HOME/.repos/algorithms;
-		git clone -y git@github.com:vlasebian/random-algorithms.git $HOME/.repos/algorithms;
+		git clone  git@github.com:vlasebian/random-algorithms.git $HOME/.repos/algorithms;
 
 		# clone hw
 		mkdir -p $HOME/.repos/homework;
-		git clone -y git@github.com:vlasebian/homework.git $HOME/.repos/homework;
+		git clone  git@github.com:vlasebian/homework.git $HOME/.repos/homework;
 
 		# clone sec
 		mkdir -p $HOME/.repos/ctf;
-		git clone -y git@github.com:vlasebian/ctf.git $HOME/.repos/ctf;
+		git clone  git@github.com:vlasebian/ctf.git $HOME/.repos/ctf;
 
 	} 2> user-wide_errors.txt
 	EOF
@@ -137,8 +136,8 @@ main() {
     echo "Okay, then, here we go!";
     sleep 5;
 
-	#add_repositories;
-	#install_packages;
+	add_repositories;
+	install_packages;
 	add_configurations;
 	make_user_specific_conf;
 

@@ -13,4 +13,5 @@
 #   Port <port>
 #
 
-
+Host github.com
+    StrictHostKeyChecking no
