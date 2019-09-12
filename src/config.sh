@@ -68,5 +68,6 @@ PACKAGES=(
     # media related apps
 
     vlc
+    spotify-client
 )
 
