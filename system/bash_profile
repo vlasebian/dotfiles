@@ -1,5 +1,9 @@
 if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+    source ~/.bashrc
 fi
 
-source ~/.dotfiles/startup-scripts/fix_ctrl.sh
+if [ -f ~/.profile ]; then
+    source ~/.profile
+fi
+
+PATH=$PATH:~/packages

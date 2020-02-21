@@ -31,8 +31,13 @@ Plugin 'tpope/vim-commentary'
 " Toogle indent guides on and off with <leader>ig (leader is /)
 Plugin 'nathanaelkane/vim-indent-guides'
 
+" Simple autocompletion
+Plugin 'ervandew/supertab'
+
 " Autocompletion for html structures
 Plugin 'mattn/emmet-vim'
+
+Plugin 'kelwin/vim-smali'
 
 
 """""" Lines added by the user end here
@@ -56,7 +61,7 @@ filetype plugin indent on    " required
 set relativenumber
 
 " Enable mouse!
-set mouse=a
+set mouse=v
 
 " Set Ctrl - b as shortcut for opening NERDTree
 map <C-b> :NERDTreeToggle<CR>
@@ -111,10 +116,6 @@ set cc=80
 set undofile
 set undodir=~/.vim/undo_history
 
-" Use nasm syntax for .asm files
-autocmd BufNewFile,BufRead *.asm set filetype=nasm
-syntax on
-
 " Function for toggling vim colorscheme
 nnoremap ,<space> :call ColorSchemeToggle()<cr>
 
@@ -134,3 +135,17 @@ endfunction
 " Fire emmet plugin up just for html/css
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
+
+" Cool syntax highlight
+autocmd BufNewFile,BufRead *.cl set filetype=cool
+
+" Use nasm syntax for .asm files
+" autocmd BufNewFile,BufRead *.asm set filetype=nasm
+
+" Antlr4 syntax
+autocmd BufRead,BufNewFile *.g4 set filetype=antlr4
+
+syntax on
+
+
+

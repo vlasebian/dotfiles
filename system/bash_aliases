@@ -6,6 +6,5 @@ alias chx='chmod +x'
 
 alias reset-sound='sudo killall -9 pulseaudio; pulseaudio >/dev/null 2>&1 &'
 alias disable-aslr='setarch `uname -m` -R /bin/bash'
-alias ghidra='/home/vlasebian/packages/ghidra_9.0/ghidraRun'
 alias tb="nc termbin.com 9999"
 alias fep="ssh vlad.vitan@fep.grid.pub.ro -X"

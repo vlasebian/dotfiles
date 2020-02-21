@@ -15,3 +15,13 @@
 
 Host github.com
     StrictHostKeyChecking no
+
+Host old-bestbucuresti.ro
+    HostName 31.14.12.181
+    User root
+    Port 2112
+
+Host bestbucuresti.ro
+    HostName 31.14.12.83
+    User root
+    Port 2112
