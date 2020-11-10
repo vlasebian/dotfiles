@@ -92,7 +92,7 @@ make_user_specific_conf() {
         # Clone repositories.
 		bash $HOME/.dotfiles/src/clone_repos.sh $CYBERSEC_TOOLS;
 
-	} 2> user-wide_errors.txt
+	} 2> user_install_errors.txt
 	EOF
 }
 
@@ -125,6 +125,6 @@ main() {
 
 	echo "     #### Installation complete ! #### "
 
-} 2> system-wide_errors.txt
+} 2> system_install_errors.txt
 
 main
