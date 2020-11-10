@@ -10,6 +10,9 @@ Plugin 'VundleVim/Vundle.vim'
 
 """"" Lines added by the user start here
 
+" Float baby float
+Plugin 'voldikss/vim-floaterm'
+
 " Use Ctrl - B to open a file browser
 Plugin 'scrooloose/nerdtree'
 
@@ -33,12 +36,6 @@ Plugin 'nathanaelkane/vim-indent-guides'
 
 " Simple autocompletion
 Plugin 'ervandew/supertab'
-
-" Autocompletion for html structures
-Plugin 'mattn/emmet-vim'
-
-Plugin 'kelwin/vim-smali'
-
 
 """""" Lines added by the user end here
 
@@ -77,16 +74,16 @@ set autoindent
 set textwidth=100
 
 "" Exit with :WQ :Wq :wQ etc.
- cnoreabbrev W! w!
- cnoreabbrev Q! q!
- cnoreabbrev Qall! qall!
- cnoreabbrev Wq wq
- cnoreabbrev Wa wa
- cnoreabbrev wQ wq
- cnoreabbrev WQ wq
- cnoreabbrev W w
- cnoreabbrev Q q
- cnoreabbrev Qall qall
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qall qall
 
 " Theme settings
 set termguicolors
@@ -105,6 +102,13 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+noremap  <leader>t  :FloatermToggle<CR>
+noremap! <leader>t  <Esc>:FloatermToggle<CR>
+tnoremap <leader>t  <C-\><C-n>:FloatermToggle<CR>
+
+let g:floaterm_width = 100
+let g:floaterm_winblend = 0
 
 " Highlight current line
 set cursorline
@@ -142,10 +146,5 @@ autocmd BufNewFile,BufRead *.cl set filetype=cool
 " Use nasm syntax for .asm files
 " autocmd BufNewFile,BufRead *.asm set filetype=nasm
 
-" Antlr4 syntax
-autocmd BufRead,BufNewFile *.g4 set filetype=antlr4
-
 syntax on
-
-
 

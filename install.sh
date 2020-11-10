@@ -1,144 +1,121 @@
 #!/usr/bin/env bash
 
-##  Bulk packages installer
+##  Bulk installer.
 ##  June 2018
 ##  MIT License
 ##
 ##  vlasebian
 
-# import variables
-source src/config.sh;
+USER=vlasebian
+CYBERSEC_TOOLS=true
 
+# Import variables.
+source src/packages.sh;
 
-# do not add ppa repositories, they are not for debian
 add_repositories() {
-
     apt-get -y update;
     apt-get -y upgrade;
+    
+    # Used for installing keys.
+    apt-get -y install curl;
 
-    apt-add-repository -y non-free;
-    apt-add-repository -y contrib;
+    # Uncomment when installing on Debian.
+    #apt-add-repository -y non-free;
+    #apt-add-repository -y contrib;
 
-    # add typora repository
+    # Add Typora repository.
     wget -qO - https://typora.io/linux/public-key.asc | apt-key add -
     add-apt-repository 'deb https://typora.io/linux ./'
 
-    apt-get -y update;
+    # Add Visual Studio Code repository.
+    curl https://packages.microsoft.com/keys/microsoft.asc | \
+        gpg --dearmor > packages.microsoft.gpg;
+    install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/;
+    sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg]
+    https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list';
+    rm packages.microsoft.gpg;
 
-    # add vscode repository
-    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-    install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-    sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-    rm packages-microsoft-gpg
+    # Add Docker repository.
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -;
+    apt-key fingerprint 0EBFCD88;
+    add-apt-repository \
+        "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) \
+        stable";
 
-    apt-get -y update;
-
-    # add spotify repository
-    curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add -
-    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    # Install docker-composer.
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname-s)-$(uname -m)" -o /usr/local/bin/docker-compose;
+    sudo curl -L https://raw.githubusercontent.com/docker/compose/1.27.4/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose;
 
     apt-get -y update;
 }
 
-
 install_packages() {
-
 	apt-get -y update;
 	apt-get -y upgrade;
 
     for app in ${PACKAGES[@]}; do
         echo "##### " $app "#####";
         sleep 1;
-	    apt-get -y build-dep $app && apt-get -y install $app;
+        apt-get -y install $app;
     done
 
 	apt-get update --fix-missing;
 	apt-get autoremove;
 	apt-get clean;
-
 }
-
 
 add_configurations() {
+	# Set hostname for using wifi hotspot, uncomment only on Debian.
+	# hostnamectl --pretty set-hostname stoapoikile;
 
-	# set hostname or wifi hotspot won't work
-	hostnamectl --pretty set-hostname onmiovn;
-
-	# limit switching apps (Alt - Tab shorcut) to current workspace
+	# Limit switching apps (Alt - Tab shorcut) to current workspace.
 	gsettings set org.gnome.shell.window-switcher current-workspace-only true;
 	gsettings set org.gnome.shell.app-switcher current-workspace-only true;
-
 }
 
-
 make_user_specific_conf() {
-
 	sudo -u "$USER" -i /bin/bash - <<-'EOF'
 	{
-		# Install fzf
-		#git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf;
-		#source $HOME/.fzf/install;
-		
-		# Install Vundle
-		git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim;
-
-		# Link files and configure vim
-		bash $HOME/.dotfiles/src/link_dotfiles.sh $SEC_TOOLS;
-
-		# change ssh key permissions
+		# Set ssh key permissions.
 		chmod 700 $HOME/.ssh;
 		chmod 644 $HOME/.ssh/id_rsa.pub;
 		chmod 600 $HOME/.ssh/id_rsa;
 
-		# make a directory for repos
-		mkdir $HOME/.repos;
+		# Install fzf.
+		#git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf;
+		#source $HOME/.fzf/install;
+		
+		# Link files and configure vim.
+		bash $HOME/.dotfiles/src/link_conf.sh;
 
-		# clone notes
-		mkdir -p $HOME/.repos/notes;
-		git clone  git@github.com:vlasebian/notes.git $HOME/.repos/notes;
-			
-		# clone snippets
-		mkdir -p $HOME/.repos/snippets;
-		git clone  git@github.com:vlasebian/snippets.git $HOME/.repos/snippets;
-
-		# clone random-algorithms
-		mkdir -p $HOME/.repos/algorithms;
-		git clone  git@github.com:vlasebian/random-algorithms.git $HOME/.repos/algorithms;
-
-		# clone hw
-		mkdir -p $HOME/.repos/homework;
-		git clone  git@github.com:vlasebian/homework.git $HOME/.repos/homework;
-
-		# clone sec
-		mkdir -p $HOME/.repos/ctf;
-		git clone  git@github.com:vlasebian/ctf.git $HOME/.repos/ctf;
+        # Clone repositories.
+		bash $HOME/.dotfiles/src/clone_repos.sh $CYBERSEC_TOOLS;
 
 	} 2> user-wide_errors.txt
 	EOF
-
 }
-
 
 main() {
 
-	# check if script is run with sudo, if not, exit with code 1
+	# Check if script is run with sudo, else exit with code 1.
 	if [[ $UID != 0 ]]; then
 	    echo "Please run this script with sudo:"
 	    echo "sudo $0 $*"
 	    exit 1
 	fi
 
-    # ssh keys check
+    # ssh keys check.
     echo "Did you copy your ssh keys? [Y/n]"
     read -n 1 -r
     echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]
-    then
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         echo "Go copy your keys, mate, then run the script again."
         exit 1
     fi
 
     echo "Okay, then, here we go!";
+    # Sleep for 5 seconds, in case you forgot something.
     sleep 5;
 
 	add_repositories;

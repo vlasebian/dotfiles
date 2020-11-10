@@ -1,12 +1,15 @@
 [user]
-	name = Vlad Vitan
-	email = vlad.vitan@keysight.com
+    name = Vlad Vitan
+    email = vladvitan@gmail.com
 
 [github]
-    user = vlavitan
+    user = vlasebian
 
 [core]
-	editor = vim
+    editor = vim
 
 [merge]
     tool = vimdiff
+
+[color]
+    ui = auto

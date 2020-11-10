@@ -1,2 +1,0 @@
-set disassembly-flavor intel
-source /home/vlasebian/packages/peda/peda.py
