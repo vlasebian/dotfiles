@@ -49,9 +49,9 @@ ln -sf "$HOME/.dotfiles/vim/vimrc" "$HOME/.vimrc";
 ln -sf "$HOME/.dotfiles/gdb/gdbinit" "$HOME/.gdbinit";
 
 # Link .bash_profile, .bashrc, .bash_aliases
-ln -sf "$HOME/.dotfiles/system/bash_profile" "$HOME/.bash_profile";
-ln -sf "$HOME/.dotfiles/system/bash_aliases" "$HOME/.bash_aliases";
-ln -sf "$HOME/.dotfiles/system/bashrc" "$HOME/.bashrc";
+ln -sf "$HOME/.dotfiles/system/bash/bash_profile" "$HOME/.bash_profile";
+ln -sf "$HOME/.dotfiles/system/bash/bash_aliases" "$HOME/.bash_aliases";
+ln -sf "$HOME/.dotfiles/system/bash/bashrc" "$HOME/.bashrc";
 
 # Link terminator config
 mkdir -p $HOME/.config/terminator/ 
