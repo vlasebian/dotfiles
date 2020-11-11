@@ -17,3 +17,5 @@ Manually install:
 - IntelliJ
 - Ghidra (if you need it)
 
+#### Other useful configurations
+TOFO

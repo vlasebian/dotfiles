@@ -6,7 +6,7 @@
 ##
 ##  vlasebian
 
-USER=vlasebian
+USER=vlsb
 CYBERSEC_TOOLS=true
 
 # Import variables.
@@ -31,8 +31,7 @@ add_repositories() {
     curl https://packages.microsoft.com/keys/microsoft.asc | \
         gpg --dearmor > packages.microsoft.gpg;
     install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/;
-    sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg]
-    https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list';
+    sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
     rm packages.microsoft.gpg;
 
     # Add Docker repository.
@@ -118,8 +117,8 @@ main() {
     # Sleep for 5 seconds, in case you forgot something.
     sleep 5;
 
-	add_repositories;
-	install_packages;
+	#add_repositories;
+	#install_packages;
 	add_configurations;
 	make_user_specific_conf;
 
