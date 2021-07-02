@@ -10,6 +10,9 @@ Plugin 'VundleVim/Vundle.vim'
 
 """"" Lines added by the user start here
 
+" Async syntax checker
+Plugin 'dense-analysis/ale'
+
 " Float baby float
 Plugin 'voldikss/vim-floaterm'
 
@@ -18,9 +21,6 @@ Plugin 'scrooloose/nerdtree'
 
 " Nice visual for the status bar
 Plugin 'vim-airline/vim-airline'
-
-" Syntax checker for vim, it can really slow it down sometimes
-Plugin 'vim-syntastic/syntastic'
 
 " A nice dark theme
 Plugin 'ajmwagar/vim-deus'
@@ -31,11 +31,11 @@ Plugin 'tpope/vim-surround'
 " Use gcc to comment out a line, gc to comment the visual selection, gcap to comment a paragraph
 Plugin 'tpope/vim-commentary'
 
-" Toogle indent guides on and off with <leader>ig (leader is /)
+" Toogle indent guides on and off with <leader>ig (leader is \)
 Plugin 'nathanaelkane/vim-indent-guides'
 
 " Simple autocompletion
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 
 """""" Lines added by the user end here
 
@@ -58,7 +58,7 @@ filetype plugin indent on    " required
 set relativenumber
 
 " Enable mouse!
-set mouse=v
+set mouse=a
 
 " Set Ctrl - b as shortcut for opening NERDTree
 map <C-b> :NERDTreeToggle<CR>
@@ -89,7 +89,7 @@ cnoreabbrev Qall qall
 set termguicolors
 colorscheme deus
 
-" Disable those annoying swap files
+" Disable those swap files
 set noswapfile
 
 " Syntastic configuration
@@ -126,7 +126,7 @@ nnoremap ,<space> :call ColorSchemeToggle()<cr>
 let g:colorscheme_is_white=0
 
 function! ColorSchemeToggle()
-    " if colorscheme is white, make it dark
+    " If colorscheme is white, make it dark.
     if g:colorscheme_is_white
         colorscheme deus
         let g:colorscheme_is_white=0
@@ -141,10 +141,20 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 
 " Cool syntax highlight
-autocmd BufNewFile,BufRead *.cl set filetype=cool
+" autocmd BufNewFile,BufRead *.cl set filetype=cool
 
 " Use nasm syntax for .asm files
 " autocmd BufNewFile,BufRead *.asm set filetype=nasm
+
+" ALE settings
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\}
+
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
 
 syntax on
 

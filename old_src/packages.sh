@@ -2,16 +2,17 @@
 
 PACKAGES=(
     # Essential packages used for installing other packages.
-    build-essential # build tools
-    apt-transport-https # vscode, docker
-    ca-certificates # docker
-    gnupg-agent # docker
+    build-essential            # build tools
+    apt-transport-https        # vscode, docker
+    ca-certificates            # docker
+    gnupg-agent                # docker
     software-properties-common # docker
 
 	# Main tools that i use in my workflow.
-    vim
+    tmux
+    nvim
     terminator
-    typora
+    #typora
     code
 
     # Command line tools.
